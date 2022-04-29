@@ -1,0 +1,108 @@
+<?php
+  $search = $_POST['search']; 
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>search</title>
+
+    
+    <link rel="stylesheet" href="css/reset.css"><!-- 리셋 css -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/font-awesome.css"><!-- 폰트어썸 구버전 css -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"><!-- 폰트어썸 신버전 CDN -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+
+    <header id="header">
+        <div class="container">
+            <? include "header.html";?>
+        </div>
+    </header>
+    <div class="container2">
+        <div class="news_wrap">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="search_value ir_su">
+        <?php echo $search ?>
+    </div>
+
+    <script>
+        /* search */
+        let searchButton = document.querySelector(".search_btt");
+        let searchInput = document.querySelector(".search_input");
+        let news = [];
+        let searchValue = document.querySelector(".search_value").textContent.trim();//trim공백 제거 함수
+    
+        /* index.html파엘에서 input값 받기 */
+        window.onload = function(){
+            searchInput.value = searchValue;
+            ajax(searchValue);
+        };
+
+        searchButton.addEventListener("click",getNewsByKeyword);
+
+        function getNewsByKeyword(e){
+            e.preventDefault();
+            let keyword = searchInput.value;
+
+            ajax(keyword);
+            
+        }
+
+        async function ajax(keyword){
+            let url = new URL(`https://api.newscatcherapi.com/v2/search?q=${keyword}&countries=KR&page_size=10`);
+            let header = new Headers({"x-api-key" : "drtufMLjwyarhko924RsscWsBOyDp3hx2UoKVEJSe6c"});
+
+            await fetch(url,{headers:header})
+                    .then((res) => res.json())
+                    .then((data) => {
+                        news = data.articles;
+                        render(news);
+                        console.log(news);
+                    })
+        }
+
+        function render(news){
+            news.forEach(function(news,index){
+                let newsHTML = `
+                    <div class="item">
+                        <a target="blink" href="${news.link}">
+                            <div class="img_box">
+                                <img src="${news.media}" alt="">
+                            </div>
+                            <div class="text_box">
+                                <p class="item_date">${news.author}, ${news.published_date}</p>
+                                <h3 class="item_title">${news.title}</h3>
+                                <p class="item_cont">${news.excerpt}</p>
+                                <em class="item_address">${news.link}</em>
+                            </div>
+                        </a>
+                    </div>
+                    `
+                document.querySelectorAll(".news_wrap ul li")[index].innerHTML = newsHTML;
+            });
+        }
+    </script>
+</body>
+</html>
