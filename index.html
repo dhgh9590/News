@@ -31,7 +31,7 @@
                     </form>
                 </div>
                 <div class="title">
-                    <a href="#">
+                    <a href="index.html">
                         <h1>New York Times</h1>
                     </a>
                 </div>
@@ -91,7 +91,7 @@
 
         const getLatestNews = async(topic,menuText) => {
             let url = new URL(`https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&topic=${topic}&page_size=5`); //api주소
-            let header = new Headers({"x-api-key" : "drtufMLjwyarhko924RsscWsBOyDp3hx2UoKVEJSe6c"}); //api key
+            let header = new Headers({"x-api-key" : "3K0SLW5UDazJsqaZhKmES2cDL0UcHWbmWnYWu2zWPgg"}); //api key
 
             await fetch(url,{headers:header})
                     .then(res => res.json())

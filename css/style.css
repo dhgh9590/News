@@ -53,10 +53,11 @@ body{font-family: 'Noto Sans KR', sans-serif; }
 .banner{display: flex; justify-content: left; margin-top: 30px;}
 .banner .left_item{width: 895px;height: 630px;}
 
-.banner .item{width: 100%;height: 100%;position: relative;}
+.banner .item{width: 100%;height: 100%;position: relative; overflow: hidden;}
 .banner .item .latest{height: 25px; padding: 0 10px; background: #f4e54c; position: absolute; top: 0;left: 0;z-index: 101; text-align: center; line-height: 25px; box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);}
 .banner .item .latest em{color: #000; font-size: 14px; font-weight: 600;}
-.banner .item img{width: 100%;height: 100%; object-fit: cover; filter: brightness(60%); }
+.banner .item img{width: 100%;height: 100%; object-fit: cover; filter: brightness(60%); transition: all 0.4s;}
+.banner .item:hover img{transform: scale(1.1);}
 .banner .item .address{position: absolute; bottom: 5px;right: 5px;}
 .banner .item .address em{color: #fff;}
 
